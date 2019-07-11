@@ -6,6 +6,8 @@ Multi-container app withKubernetes production ready
 
 Create ```client-deployment.yaml``` for multi client deployment with 3 child pods running multi-client-fib image.
 
+Create ```server-deployment.yaml``` for multi-server image set of pods with port 5000 accessible on the image that gets created inside of each of those pods.
+
 #### Services
 
 Set up some networking for an object (single pod of a group of pods managed by Deployment).
@@ -35,6 +37,8 @@ Load the configfile into kubernetes.
 Or load a group of files inside of k8s
 
     kubectl apply -f k8s
+
+Create ```server-cluster-ip-service.yaml``` to provide access to multi server pods.
 
 ##### Services: NodePort
 

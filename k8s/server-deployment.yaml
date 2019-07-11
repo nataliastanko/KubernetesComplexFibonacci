@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment # object of type Deployment
+metadata:
+  name: server-deployment # name of deployment
+spec: # configure this Deployment and its behaviour
+  replicas: 3
+  selector:
+    matchLabels:
+      component: server
+  template: # pod template for server
+    metadata:
+      labels:
+        component: server # identify pods it is supposed to manage
+    spec: # behaviours of created pods
+      containers: # containers in this pod
+        - name: server
+          image: nataliastanko/multi-server-fib
+          ports: # ports we want to make available
+            - containerPort: 5000

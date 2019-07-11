@@ -12,8 +12,9 @@ spec:
       labels:
         component: worker
     spec:
+      containers:
         - name: worker
           image: nataliastanko/multi-worker-fib
-        # no ports
-        # there is nothing that needs to connect directly to multi worker to get some info aout of it
-        # but the worker needs to connect to redis
+          # no ports
+          # there is nothing that needs to connect directly to multi worker to get some info aout of it
+          # but the worker needs to connect to redis

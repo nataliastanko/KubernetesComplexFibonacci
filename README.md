@@ -16,6 +16,10 @@ Create ```server-deployment.yaml``` for multi-server image set of pods with port
 
 Create ```worker-deployment.yaml```.
 
+#### Configure Redis
+
+Create ```worker-deployment.yaml```.
+
 ### Services
 
 Set up some networking for an object (single pod of a group of pods managed by Deployment).
@@ -51,6 +55,10 @@ Or load a group of files inside of k8s
 #### Configure server
 
 Create ```server-cluster-ip-service.yaml``` to provide access to multi server pods.
+
+#### Configure Redis
+
+Create ```redis-cluster-ip-service.yaml``` to provide access to multi server pods.
 
 #### Services: NodePort
 

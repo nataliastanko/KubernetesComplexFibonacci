@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment # object of type Deployment
+metadata:
+  name: client-deployment # name of deplyment
+spec: # configure this Deployment
+  replicas: 3 # number od identical pods of this template
+  selector:
+    matchLabels:
+      component: web
+  template: # pod template
+    metadata:
+      labels:
+        component: web # identify pods it is supposed to manage
+    spec:
+      containers: # containers in this pod
+        - name: client
+          image: nataliastanko/multi-client-fib
+          ports:
+            - containerPort: 3000

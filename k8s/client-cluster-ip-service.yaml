@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service # type of object that set ups networking, Service does have subtypes
+metadata:
+  name: client-cluster-ip-service
+spec: # configure this Service
+  type: ClusterIP # service subtype
+  # set of pods (multi-client-fib pods) that we create access to
+  selector:
+    component: web
+  ports:
+    - port: 3000
+      targetPort: 3000

@@ -2,7 +2,7 @@
 
 Multi-container app withKubernetes production ready
 
-### Config file for each service and deployment
+## Config file for each service and deployment
 
 #### Configure client
 
@@ -20,11 +20,15 @@ Create ```worker-deployment.yaml```.
 
 Create ```worker-deployment.yaml```.
 
+#### Configure Postgres
+
+Create ```postgres-deployment.yaml```.
+
 ### Services
 
 Set up some networking for an object (single pod of a group of pods managed by Deployment).
 
-#### Services: ClusterIP
+### Services: ClusterIP
 
 ClusterIP is a subtype of Service object.
 Restrictive type of networking.
@@ -58,14 +62,18 @@ Create ```server-cluster-ip-service.yaml``` to provide access to multi server po
 
 #### Configure Redis
 
-Create ```redis-cluster-ip-service.yaml``` to provide access to multi server pods.
+Create ```redis-cluster-ip-service.yaml```.
 
-#### Services: NodePort
+#### Configure Postgres
+
+Create ```postgres-cluster-ip-service.yaml```.
+
+### Services: NodePort
 
 NodePort is a subtype of Service object.
 Exposes a set of pods to the outside world (only dev).
 
-### Combining Config into a single file
+## Combining Config into a single file
 
 Config file ```server-config.yaml``` example:
 

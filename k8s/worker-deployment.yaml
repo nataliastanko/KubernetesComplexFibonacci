@@ -18,3 +18,8 @@ spec:
           # no ports
           # there is nothing that needs to connect directly to multi worker to get some info aout of it
           # but the worker needs to connect to redis
+          env:
+            - name: REDIS_HOST
+              value: redis-cluster-ip-service
+            - name: REDIS_PORT
+              value: 6379

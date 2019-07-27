@@ -146,11 +146,15 @@ Many databases connecting to the same volume (filesystem) without having them aw
 
 Long term durable storage volume not tied to any specific pod or container. Stays in its state when a pod crashes. Exists outside the pod. Volume existing already, is already available. Created ahead of time - statically provisioned.
 
+    kubectl get pv
+
 ### PVC - Persistent Volume Claim
 
 Not an actual volume. You can get it when pod is created. Created on the fly, dynamically, when you ask for it.
 
 Create ```database-persistent-volume-claim.yaml```.
+
+    kubectl get pvc
 
 ## Cloud storage provider examples
 
@@ -160,6 +164,20 @@ Create ```database-persistent-volume-claim.yaml```.
 * AWS Block Store
 
 [Storage Classes options](https://kubernetes.io/docs/concepts/storage/storage-classes/)
+
+## Environment variables
+
+* REDIS_HOST - const values, it's URL
+* REDIS_PORT - const values
+* PGUSER - const values
+* PGHOST - const values, it's URL
+* PGDATABASE - const values
+* PGPORT - const values
+* PGPASSWORD - secret object in the cluster, created with imperative command on local machine:
+
+    kubectl create secret generic secretname --from-literal key=value
+    kubectl create secret generic pgpassword --from-literal PGPASSWORD=yourpassword
+    kubectl get secrets
 
 ## Ingress Service
 

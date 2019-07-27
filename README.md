@@ -1,6 +1,14 @@
 # Kubernetes Complex Fibonacci
 
-Multi-container app withKubernetes production ready
+Multi-container app with Kubernetes production ready
+
+## Workflow
+
+#### 1. Test locally on minikube
+
+#### 2. Create github and travis flow to build images and deploy
+
+#### 3. Deploy app to a cloud provider
 
 ## Config file for each service and deployment
 
@@ -32,8 +40,8 @@ Set up some networking for an object (single pod of a group of pods managed by D
 
 ClusterIP is a subtype of Service object.
 Restrictive type of networking.
-Allows any other object in our cluster to access the object that the ClustrIP ponts at. But nobody else from the outside world (e.g. web browser) can access it. It does not allow traffic from the outside world.
-Exposes a pod or a set of pods to other ojects in the cluster
+Allows any other object in our cluster to access the object that the ClusterIP points at. But nobody else from the outside world (e.g. web browser) can access it. It does not allow traffic from the outside world.
+Exposes a pod or a set of pods to other objects in the cluster
 
 #### Configure client
 
@@ -48,7 +56,7 @@ Delete old deployment:
     kubectl delete services client-node-port
     kubectl get services # do not delete kubernetes service
 
-Load the configfile into kubernetes.
+Load the config file into kubernetes.
 
     kubectl apply -f k8s/client-deployment.yaml
 
@@ -111,18 +119,52 @@ spec:
       targetPort: 5000
 ```
 
-#### 1. Test localy on minikube
+## Volumes
 
-#### 2. Create github and travis flow to build images and deploy
+### What is volume
 
-#### 3. Deploy app to a cloud provider
+Volume in generic container terminology means some type if mechanism that allows a container to access a filesystem outside itself.
 
-### Ingress Service
+#### Volume in Kubernetes
+
+Volume in Kubernetes is an object that allows a container to store data at the pod level. It is tied to pod's life cycle.
+
+    kubectl get storageclass
+    kubectl describe storageclass
+
+### Volumes with databases
+
+Postgres writes to a filesystem in a container. If a pod crashes it is going to be deleted by the deployment, we loose data and a new pod is going to be created with no data carrier over. Thats why we need volumes for Postgres in a host machine.
+
+In case of data we want to last we need to use Persistent Volume or Persistent Volume Claim.
+
+#### Replicas
+
+Many databases connecting to the same volume (filesystem) without having them aware of each other is a disaster.
+
+### PV - Persistent Volume
+
+Long term durable storage volume not tied to any specific pod or container. Stays in its state when a pod crashes. Exists outside the pod. Volume existing already, is already available. Created ahead of time - statically provisioned.
+
+### PVC - Persistent Volume Claim
+
+Not an actual volume. You can get it when pod is created. Created on the fly, dynamically, when you ask for it.
+
+Create ```database-persistent-volume-claim.yaml```.
+
+## Cloud storage provider examples
+
+* Google Cloud Persistent Disk
+* Azure File
+* Azure Disc
+* AWS Block Store
+
+[Storage Classes options](https://kubernetes.io/docs/concepts/storage/storage-classes/)
+
+## Ingress Service
 
 Instead of Nginx we ar going to use Ingress Service for routing.
 Request traffic goes through Ingress Service and it accessible in our cluster thanks to it.
-
-### PVC - Persistent Volume Claim
 
 ***
 

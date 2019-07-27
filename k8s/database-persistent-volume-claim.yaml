@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim # object of type PersistentVolumeClaim,
+                            # we attach it to a pod config
+metadata:
+  name: database-persistent-volume-claim
+spec:
+  accessModes:
+    - ReadWriteOnce # instance of storage that can be used by a single node at a time
+                    # that node can read and write to this volume
+                    # Once means a single node
+  resources:
+    requests:
+      storage: 1Gi # 1GB
+  # storageClassName: # we use default

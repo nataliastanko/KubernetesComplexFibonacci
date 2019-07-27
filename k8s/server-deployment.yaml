@@ -21,7 +21,7 @@ spec: # configure this Deployment and its behaviour
             - name: REDIS_HOST
               value: redis-cluster-ip-service
             - name: REDIS_PORT
-              value: 6379
+              value: '6379'
             - name: PGUSER
               value: postgres
             - name: PGHOST
@@ -29,7 +29,7 @@ spec: # configure this Deployment and its behaviour
             - name: PGDATABASE
               value: postgres
             - name: PGPORT
-              value: 5432
+              value: '5432'
             - name: PGPASSWORD
               valueFrom:
                 secretKeyRef:

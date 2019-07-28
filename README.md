@@ -152,7 +152,7 @@ Deployment for multi-client is a type of controller which constantly works to ma
 
 ##### Fix not secure connection
 
-#### [On Google Cloud ](../blob/master/GoogleCloud.md)
+#### [On Google Cloud ](../master/GoogleCloud.md)
 
 ## Combining Config into a single file
 

@@ -60,7 +60,7 @@ Add to travis ```before_install```:
 
 4. In ```travis.yml``` add code to unencrypt the json file and load it into Google Cloud SKD
 
-    Add the following to your build script (before_install stage in your .travis.yml, for instance):
+    Add the following to your build script (before_install stage in your  ```.travis.yml```, for instance):
 
         openssl aes-256-.......
 
@@ -71,14 +71,23 @@ Establish your GC:
 * compute zone (menu:Compute:Kubernetes Engine:Location)
 * cluster name (menu:Compute:Kubernetes Engine:name)
 
-and put it into travis file.
+and put it into ```.travis.yml```.
 
 ### Login to Docker CLI
 
+With adding to ```.travis.yml```:
 
-### Build the test version
-### Run tests
-### If test are successful run a script to deploy newest image
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+And to your [travis](https://travis-ci.org) project Settings:Environment Variables add ```DOCKER_PASSWORD``` and ```DOCKER_USERNAME``` with your docker credentials.
+
+### Build the test version image and run tests
+
+  Tag a new image version for tests and run them.
+
+### If tests are successful run a script to deploy newest image
+
+
 ### Build all our images, tag each one, push each to docker hub
 ### Apply all configs in the k8x folder
 ### Imperatively set latest images on each deployment

@@ -146,11 +146,13 @@ Deployment for multi-client is a type of controller which constantly works to ma
       	kubectl delete service client-cluser-ip-service
       	kubectl apply -f k8s/client-cluster-ip-service.yaml
   * If you shut off your computer you may have to recreate the virtual machine and set up the secret again.
-  *
+  * Check minikube dashboard (but editing it makes imperative changes)
+
+    	minikube dashboard
 
 ##### Fix not secure connection
 
-#### On Google Cloud
+#### [On Google Cloud ](../blob/master/GoogleCloud.md)
 
 ## Combining Config into a single file
 

@@ -87,11 +87,15 @@ And to your [travis](https://travis-ci.org) project Settings:Environment Variabl
 
 ### If tests are successful run a script to deploy newest image
 
+Create ```deploy.sh``` deploy script and run it ```./deploy.sh``` with travis.
 
 ### Build all our images, tag each one, push each to docker hub
-### Apply all configs in the k8x folder
-### Imperatively set latest images on each deployment
 
+With ```deploy.sh``` script build an image for client, server and worker, apply all configs in the k8s folder.
+
+### Imperatively set latest images on each deployment with ```deploy.sh``` script
+
+We have to tag it with unique version tag so the images are pulled. Let's use git commit SHA.
 
 ***
 

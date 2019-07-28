@@ -15,5 +15,11 @@ before_install:
 
 script:
   # how to run tests
-  - docker run nataliastanko/react-test-dummy npm test -- --coverage
-  # - docker run -e CI=true nataliastanko/react-test-dummy npm run test
+  # - docker run nataliastanko/react-test-dummy npm test -- --coverage
+  - docker run -e CI=true nataliastanko/react-test-dummy npm run test
+
+deploy:
+  provider: script
+  script: bash ./deploy.sh
+  on:
+    branch: master

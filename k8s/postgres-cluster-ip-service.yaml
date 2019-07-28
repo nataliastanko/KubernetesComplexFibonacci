@@ -5,7 +5,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    component: postgre
+    component: postgres
   ports:
     - port: 5432 # for outside objects
       targetPort: 5432

@@ -140,12 +140,15 @@ Deployment for multi-client is a type of controller which constantly works to ma
 
 ##### Troubleshooting
 
-   If ```Your connection is not private``` proceed anyway.
+  * If ```Your connection is not private``` proceed anyway.
+  * If ```503 Service Temporarily Unavailable``` and no typos in the config:
 
-   If ```503 Service Temporarily Unavailable``` and no typos in the config:
+      	kubectl delete service client-cluser-ip-service
+      	kubectl apply -f k8s/client-cluster-ip-service.yaml
+  * If you shut off your computer you may have to recreate the virtual machine and set up the secret again.
+  *
 
-      kubectl delete service client-cluser-ip-service
-      kubectl apply -f k8s/client-cluster-ip-service.yaml
+##### Fix not secure connection
 
 #### On Google Cloud
 

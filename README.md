@@ -81,6 +81,67 @@ Create ```postgres-cluster-ip-service.yaml```.
 NodePort is a subtype of Service object.
 Exposes a set of pods to the outside world (only dev).
 
+### Services: LoadBalancer
+
+Legacy way of getting network traffic into a cluster. Allows access to one specific set of pods inside of an application.
+
+## Services: Ingress
+
+Instead of Nginx we ar going to use Ingress Service for routing.
+Request traffic goes through Ingress Service and it accessible in our cluster thanks to it.
+
+Ingress config is an object that has as a set of rules describing how traffic should be routed.
+
+Ingress controller watches for changes to the ingress and updates traffic handling.
+
+Deployment for multi-client is a type of controller which constantly works to make sure that routing rules are setup.
+
+### Nginx Ingress
+
+* [ingress-nginx][Kubernetes ingress-nginx repo] is a community led project (which we are going to use. Has already build-in some features like e.g. sticky session,
+* [kubernetes-ingress](https://github.com/nginxinc/kubernetes-ingress) is a project led by the company nginx
+
+### Setup ingress-nginx
+
+#### On local machine
+
+1. Go to [ingress-nginx][Kubernetes ingress-nginx repo], then follow the link at the top of repo and choose Deploy tab - [NGINX Ingress Controller for Kubernetes installation guide](https://kubernetes.github.io/ingress-nginx/deploy)
+2. Choose Generic Deployment/Prerequisite Generic Deployment Command
+
+	1. The following Mandatory Command is required for all deployments:
+
+    		kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml
+
+	2. Look at nginx-ingress-controller config Deployment object type (bottom of the [file][Kubernetes Nginx Ingress Controller])
+
+3. Choose Provider Specific Steps:Minikube
+
+	1. Run
+
+			minikube addons enable ingress
+
+4. Choose GCE-GK
+
+ 	1. Look at [GCE-GKE file](https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/cloud-generic.yaml)
+
+    	There is LoadBalancer type of service.
+
+5. Create ```ingress-service.yaml```
+
+	and apply with
+
+    	kubectl apply -f k8s
+
+6. Use the result of
+
+    	minikube ip
+
+  	in your browser.
+
+   If ```Your connection is not private``` proceed anyway.
+
+#### On Google Cloud
+
 ## Combining Config into a single file
 
 Config file ```server-config.yaml``` example:
@@ -118,6 +179,8 @@ spec:
     - port: 5000
       targetPort: 5000
 ```
+
+* [example config file][Kubernetes Nginx Ingress Controller]
 
 ## Volumes
 
@@ -175,14 +238,22 @@ Create ```database-persistent-volume-claim.yaml```.
 * PGPORT - const values
 * PGPASSWORD - secret object in the cluster, created with imperative command on local machine:
 
-    kubectl create secret generic secretname --from-literal key=value
-    kubectl create secret generic pgpassword --from-literal PGPASSWORD=yourpassword
-    kubectl get secrets
+      kubectl create secret generic secretname --from-literal key=value
+      kubectl create secret generic pgpassword --from-literal PGPASSWORD=yourpassword
+      kubectl get secrets
 
-## Ingress Service
 
-Instead of Nginx we ar going to use Ingress Service for routing.
-Request traffic goes through Ingress Service and it accessible in our cluster thanks to it.
+Or leave it empty and use the [link text itself].
+
+URLs and URLs in angle brackets will automatically get turned into links.
+http://www.example.com or <http://www.example.com> and sometimes
+example.com (but not on Github, for example).
+
+Some text to show that the reference links can follow later.
+
+[Kubernetes Nginx Ingress Controller]: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml
+
+[Kubernetes ingress-nginx repo]: http://github.com/kubernetes/ingress-nginx
 
 ***
 

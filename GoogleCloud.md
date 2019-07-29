@@ -95,7 +95,110 @@ With ```deploy.sh``` script build an image for client, server and worker, apply 
 
 ### Imperatively set latest images on each deployment with ```deploy.sh``` script
 
-We have to tag it with unique version tag so the images are pulled. Let's use git commit SHA.
+We have to tag it with both latest and unique version tags (2 tags) so the images are pulled. Let's use git commit SHA.
+
+## Configuration on Google Cloud panel
+
+### Create a secret var manually on remote kubernetes instance.
+
+Use GC dashboard -> Activate Cloud Shell shortcut and rerun series of commands:
+
+    gcloud config set project multi-k8s-248118 # it is your GC project ID
+    gcloud config set compute/zone europe-west3-a
+    gcloud container clusters get-credentials multi-cluster # it is your GC cluster name
+    kubectl create secret generic pgpassword --from-literal PGPASSWORD=yourpassword # this password can be different than your prev dev env app password
+
+You can preview list of secrets on menu:Compute:Kubernetes Engine:Configuration
+
+### Configure Ingress Service
+
+* Use [ingress-nginx][Kubernetes ingress-nginx repo].
+* On [NGINX Ingress Controller for Kubernetes installation guide](https://kubernetes.github.io/ingress-nginx/deploy) choose Using [Helm][Kubernetes Using Helm].
+
+#### Helm (client)
+
+[Helm](https://helm.sh) is a package manager for Kubernetes ([github](https://github.com/helm/helm), [installation guide from script](https://helm.sh/docs/using_helm/#from-script)). Install it via google cloud console (```curl -L https://git.io/get_helm.sh | bash```).
+
+#### GKE on Google Cloud
+
+[Helm GKE](https://helm.sh/docs/using_helm/#gke)
+
+##### RBAC - Role Based Access Control
+
+* Who can access and modify objects in our cluster
+* Enabled on Google Cloud by default
+
+Tiller wants to make changes to our cluster so it needs to get some permissions set.
+
+* User Accounts - identifies a person administering our cluster
+* Service Accounts - identifies a pod administering a cluster
+* ClusterRoleBinding - authorizes an account to do a certain set of actions across the entire cluster
+* RoleBinding - authorizes an account to do a certain set of actions in a single namespace
+
+    kubectl get namespaces
+
+Create a new service account called tiller in the kube-system namespace:
+
+    kubectl create serviceaccount --namespace kube-system tiller
+
+Create a new cluserrolebinding with the role cluser-admin and assign it to service account tiller:
+
+    kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluser-admin --serviceaccount=kube-system:tiller
+
+###### Troubleshooting
+
+If you get the error ```Error: release my-nginx failed: namespaces "default" is forbidden: User "system:serviceaccount:kube-system:tiller" cannot get resource "namespaces" in API group "" in the namespace "default"``` fix it with solution from [this link](https://docs.bitnami.com/kubernetes/how-to/configure-rbac-in-your-kubernetes-cluster/#use-case-2-enable-helm-in-your-cluster).
+
+Create a ```tiller-clusterrolebinding.yaml``` file with the following contents:
+
+```yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: tiller-clusterrolebinding
+subjects:
+- kind: ServiceAccount
+  name: tiller
+  namespace: kube-system
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: ""
+```
+
+and deploy the ClusterRoleBinding:
+
+    kubectl create -f tiller-clusterrolebinding.yaml
+
+#### Initialize Helm
+
+    helm init --service-account tiller --upgrade
+
+Kubernetes cluster has RBAC enabled ([Kubernetes Helm doc][Kubernetes Using Helm]) so run:
+
+    helm install stable/nginx-ingress --name my-nginx --set rbac.create=true
+
+to create a set of objects.
+
+Go to Workloads tab to se your deployments:
+
+```
+my-nginx-nginx-ingress-controller	 OK	Deployment	1/1	default	multi-cluster
+my-nginx-nginx-ingress-default-backend	 OK	Deployment	1/1	default	multi-cluster
+```
+
+Go to Services (Services & Ingress) tab and look at Endpoints. Click on one and see ```default backend - 404``` message.
+
+Go to menu:Networking:Network services to see Google Cloud LoadBalancer.= created for our cluster. It's details say there are 3 instances of VM nodes of kubernetes cluster.
+
+#### Tiller (the Helm server)
+
+Server that modifies kubernetes cluster
+
+## Deploy
+
+[Kubernetes ingress-nginx repo]: http://github.com/kubernetes/ingress-nginx
+[Kubernetes Using Helm]: https://kubernetes.github.io/ingress-nginx/deploy/#using-helm
 
 ***
 

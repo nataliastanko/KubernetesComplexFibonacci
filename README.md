@@ -106,6 +106,7 @@ Deployment for multi-client is a type of controller which constantly works to ma
 #### On local machine
 
 1. Go to [ingress-nginx][Kubernetes ingress-nginx repo], then follow the link at the top of repo and choose Deploy tab - [NGINX Ingress Controller for Kubernetes installation guide](https://kubernetes.github.io/ingress-nginx/deploy)
+
 2. Choose Generic Deployment/Prerequisite Generic Deployment Command
 
 	1. The following Mandatory Command is required for all deployments:
@@ -116,7 +117,7 @@ Deployment for multi-client is a type of controller which constantly works to ma
 
 3. Choose Provider Specific Steps:Minikube
 
-	1. Run
+	3. Run
 
 			minikube addons enable ingress
 

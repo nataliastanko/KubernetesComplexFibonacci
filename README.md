@@ -255,6 +255,16 @@ Create ```database-persistent-volume-claim.yaml```.
       kubectl create secret generic pgpassword --from-literal PGPASSWORD=yourpassword
       kubectl get secrets
 
+## Local development with [Skaffold](https://skaffold.dev)
+
+Install skaffold locally.
+
+Create ```skaffold.yaml```.
+
+Run
+
+    skaffold dev
+
 [Kubernetes Nginx Ingress Controller]: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml
 
 [Kubernetes ingress-nginx repo]: http://github.com/kubernetes/ingress-nginx

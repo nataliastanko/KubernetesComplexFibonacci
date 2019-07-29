@@ -9,9 +9,30 @@ metadata:
     # example: rewrite /api to just /
     # nginx.ingress.kubernetes.io/rewrite-target: / # old way
     nginx.ingress.kubernetes.io/rewrite-target: /$1
+    certmanager.k8s.io/cluster-issuer: 'letsencrypt-prod' # expect certificate from the lets encrypt issuer
+    nginx.ingress.kubernetes.io/ssl-redirect: 'true' # redirect to https always
 spec:
+  tls:
+    - hosts:
+        - anithaly.com
+        - www.anithaly.com
+      secretName: anithalysecretname
   rules:
-    - http:
+    # for anithaly.com
+    - host: anithaly.com
+      http:
+        paths: # 2 possible paths (routes)
+          - path: /?(.*) # / send to pods govern by the service client-cluster-ip-service
+            backend:
+              serviceName: client-cluster-ip-service
+              servicePort: 3000
+          - path: /api/?(.*) # /api send to pods govern by the service server-cluster-ip-service
+            backend:
+              serviceName: server-cluster-ip-service
+              servicePort: 5000
+    # for www.anithaly.com
+    - host: www.anithaly.com
+      http:
         paths: # 2 possible paths (routes)
           - path: /?(.*) # / send to pods govern by the service client-cluster-ip-service
             backend:

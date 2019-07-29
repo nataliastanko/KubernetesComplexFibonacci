@@ -233,6 +233,8 @@ Create ```certificate.yaml``` and ```issuer.yaml``` config files.
 
     kubectl get certificates
     kubectl describe certificates
+    kubectl get secrets # look for spec:secretName
+
 
 [Kubernetes ingress-nginx repo]: http://github.com/kubernetes/ingress-nginx
 [Kubernetes Using Helm]: https://kubernetes.github.io/ingress-nginx/deploy/#using-helm

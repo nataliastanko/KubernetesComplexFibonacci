@@ -213,6 +213,27 @@ Go to menu:Compute:Kubernetes Engine:Storage tab to see Persistent volume create
 
 Go to menu:Compute:Kubernetes Engine:Configuration tab to see Secrets and service account created.
 
+
+## Setup HTTPS on kubernetes cluster
+
+### LetsEncrypt
+
+#### [Cert Manager](https://github.com/jetstack/cert-manager)
+
+[Installing cert-manager with Helm](https://docs.cert-manager.io/en/latest/getting-started/install/kubernetes.html#installing-with-helm)
+
+    # Install the cert-manager Helm chart
+    helm install \
+    --name cert-manager \
+    --namespace cert-manager \
+    --version v0.8.1 \
+    jetstack/cert-manager
+
+Create ```certificate.yaml``` and ```issuer.yaml``` config files.
+
+    kubectl get certificates
+    kubectl describe certificates
+
 [Kubernetes ingress-nginx repo]: http://github.com/kubernetes/ingress-nginx
 [Kubernetes Using Helm]: https://kubernetes.github.io/ingress-nginx/deploy/#using-helm
 

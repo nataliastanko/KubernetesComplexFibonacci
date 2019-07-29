@@ -255,15 +255,6 @@ Create ```database-persistent-volume-claim.yaml```.
       kubectl create secret generic pgpassword --from-literal PGPASSWORD=yourpassword
       kubectl get secrets
 
-
-Or leave it empty and use the [link text itself].
-
-URLs and URLs in angle brackets will automatically get turned into links.
-http://www.example.com or <http://www.example.com> and sometimes
-example.com (but not on Github, for example).
-
-Some text to show that the reference links can follow later.
-
 [Kubernetes Nginx Ingress Controller]: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml
 
 [Kubernetes ingress-nginx repo]: http://github.com/kubernetes/ingress-nginx

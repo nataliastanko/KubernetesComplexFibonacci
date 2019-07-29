@@ -180,7 +180,7 @@ Kubernetes cluster has RBAC enabled ([Kubernetes Helm doc][Kubernetes Using Helm
 
 to create a set of objects.
 
-Go to Workloads tab to se your deployments:
+Go to menu:Compute:Kubernetes Engine:Workloads tab to see your deployments:
 
 ```
 my-nginx-nginx-ingress-controller	 OK	Deployment	1/1	default	multi-cluster
@@ -196,6 +196,22 @@ Go to menu:Networking:Network services to see Google Cloud LoadBalancer.= create
 Server that modifies kubernetes cluster
 
 ## Deploy
+
+After travis deploy go to menu:Compute:Kubernetes Engine:Workloads tab to see your deployments:
+
+```
+client-deployment	 OK	Deployment	3/3	default	multi-cluster
+my-nginx-nginx-ingress-controller	 OK	Deployment	1/1	default	multi-cluster
+my-nginx-nginx-ingress-default-backend	 OK	Deployment	1/1	default	multi-cluster
+postgres-deployment	 OK	Deployment	1/1	default	multi-cluster
+redis-deployment	 OK	Deployment	1/1	default	multi-cluster
+server-deployment	 OK	Deployment	3/3	default	multi-cluster
+worker-deployment	 OK	Deployment	1/1	default	multi-cluster
+```
+
+Go to menu:Compute:Kubernetes Engine:Storage tab to see Persistent volume created.
+
+Go to menu:Compute:Kubernetes Engine:Configuration tab to see Secrets and service account created.
 
 [Kubernetes ingress-nginx repo]: http://github.com/kubernetes/ingress-nginx
 [Kubernetes Using Helm]: https://kubernetes.github.io/ingress-nginx/deploy/#using-helm
